@@ -1,0 +1,351 @@
+{% extends "base.html"%}
+{% load static %}
+
+{% block title%} NewsBlogA37  | Home {% endblock %}
+
+{% block content %}
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<section class="w3l-testimonials pt-4" id="testimonials">
+    <!-- main-slider -->
+    <div class="testimonials pt-2 pb-5">
+        <div class="container pb-lg-5">
+            <div class="owl-testimonial owl-carousel owl-theme mb-md-0 mb-sm-5 mb-4">
+                {% for cat in categories %}
+                <div class="item">
+                    <div class="row slider-info">
+                        <div class="col-lg-8 message-info align-self">
+                            <span class="label-blue mb-sm-4 mb-3"><a href="{{cat.get_absolute_url}}">{{cat.title}}</a></span>
+                            <h3 class="title-big mb-4"><a href="{{cat.get_absolute_url}}">{{cat.short_title}}</a>
+                            </h3>
+                            <p class="message">{{cat.body|slice:100}}</p>
+                        </div>
+                        <div class="col-lg-4 col-md-8 img-circle mt-lg-0 mt-4">
+                            <img src="{{cat.image.url}}" class="img-fluid radius-image-full" alt="client image">
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </div>
+        </div>
+    </div>
+    <!-- /main-slider -->
+</section>
+
+<section class="w3l-homeblock1 py-sm-5 py-4">
+    <div class="container py-md-4">
+        <div class="grids-area-hny main-cont-wthree-fea row">
+            
+           
+           {% for cat in categories.all %}
+          
+
+            <div class="col-lg-3 col-6 grids-feature mt-lg-0 mt-md-4 mt-3">
+                <a href="#lifsetyle">
+                    <div class="area-box">
+                        
+                        <h4 class="title-head"><a href="{{cat.get_absolute_url}}">{{cat.title }}</a></h4>
+                    </div>
+                </a>
+            </div>
+
+            {% endfor %}
+            
+            
+        </div>
+    </div>
+</section>
+<!-- //homeblock1-->
+
+
+
+
+
+
+<div class="w3l-homeblock2 py-5">
+    <div class="container py-lg-5 py-md-4">
+        <!-- block -->
+        <div class="row">
+            <div class="col-lg-8">
+                <h3 class="section-title-left mb-4"> Editor's Pick </h3>
+                <div class="row">
+                    {% for post in editors_pick %}
+                    <div class="col-lg-6 col-md-6 item">
+                        <div class="card">
+                            <div class="card-header p-0 position-relative">
+                                <a href="{{post.get_absolute_url}}">
+                                    <img class="card-img-bottom d-block radius-image-full"
+                                        src="{{ post.image.url }}" alt="Card image cap" style="height: 200px;">
+                                </a>
+                            </div>
+                            <div class="card-body blog-details">
+                                <span class="label-blue">{{post.category}}</span>
+                                <a href="{{post.get_absolute_url}}" class="blog-desc">{{post.title}}
+                                </a>
+                               <p class="truncate">{{post.body|safe|slice:200}}
+                                <div class="author align-items-center mt-3 mb-1">
+                                    <img src="{{post.author.image.url}}" alt="" class="img-fluid rounded-circle" />
+                                    <ul class="blog-meta">
+                                        <li>
+                                            <a href="{% url 'news:user-posts' post.author.pk %}">{{post.author.user}}</a> </a>
+                                        </li>
+                                        <li class="meta-item blog-lesson">
+                                            <span class="meta-value"> {{post.modified|timesince}} Ago</span>. <span
+                                                class="meta-value ml-2"><span class="fa fa-clock-o"></span></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    {% endfor %}
+                    
+                    
+                </div>
+                <div class="mt-4 left-right bg-clr-white p-3">
+                    <h3 class="section-title-left align-self pl-2 mb-sm-0 mb-3">Advertise with us </h3>
+                    <a class="btn btn-style btn-primary" href="#url">Learn more</a>
+                </div>
+            </div>
+            <div class="col-lg-4 trending mt-lg-0 mt-5">
+                <div class="topics">
+                    <h3 class="section-title-left mb-4"> Categories</h3>
+                     {% for cat in categories.all|slice:4 %}
+                    <a href="{{cat.get_absolute_url}}" class="topics-list">
+                        <div class="list1">
+                            <span class="fa fa-chevron-circle-right"></span>
+                            <h4>{{cat}}</h4>
+                        </div>
+                    </a>
+                    <br>
+                    {%endfor%}
+                    
+                    
+                    
+                </div>
+                <div class="sponsers mt-5">
+                    <h3 class="section-title-left mb-4"> Our sponsers</h3>
+                    <a href="#ad-banner"><img src="{% static 'assets/images/ad.jpg' %}" alt="" class="img-fluid radius-image-full" /></a>
+                    <a href="#advertise" class="text-center d-block text-uppercase">Advertise with us </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="w3l-homeblock3 py-5">
+    <div class="container py-lg-5 py-md-4">
+        <h3 class="section-title-left mb-4"> Top Pick's of this month </h3>
+        <div class="row top-pics">
+            {% for post in month%}
+            <div class="col-lg-4 col-md-6">
+                <div class="top-pic1" style="background: url({{post.image.url}}) no-repeat 0px 0px;">
+                    <div class="card-body blog-details">
+                        <a href="{{post.get_absolute_url}}" class="blog-desc">{{post.title}}
+                        </a>
+                        <div class="author align-items-center">
+                            <img src="{{post.author.image.url}}" alt="" class="img-fluid rounded-circle" />
+                            <ul class="blog-meta">
+                                <li>
+                                    <a href="{% url 'news:user-posts' post.author.pk %}">{{post.author.user}}</a> </a>
+                                </li>
+                                <li class="meta-item blog-lesson">
+                                    <span class="meta-value"> {{post.modified|timesince}} Ago</span>. <span
+                                        class="meta-value ml-2"><span class="fa fa-clock-o"></span> </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+</div>
+
+ {% for category in categories|slice:3 %}
+ {% if forloop.first %}
+<div class="w3l-homeblock2 py-5">
+    <div class="container py-lg-5 py-md-4">
+        <!-- block -->
+
+        <div class="left-right">
+            <h3 class="section-title-left mb-sm-4 mb-2"> {{ category.title }}</h3>
+            <a href="{{category.get_absolute_url}}" class="more btn btn-small mb-sm-0 mb-4">View more</a>
+        </div>
+        <div class="row">
+               {% for post in category.posts_for_frontpage %}   
+            <div class="col-lg-4 col-md-6 item">
+                 
+                <div class="card">
+                    
+                    <div class="card-header p-0 position-relative">
+                        <a href="{{post.get_absolute_url}}">
+                            <img class="card-img-bottom d-block radius-image-full" src="{{post.image.url}}"
+                                alt="Card image cap" style="height: 150px;">
+                        </a>
+                    </div>
+                    <div class="card-body blog-details">
+                        <a href="{% url 'news:user-posts' post.author.pk %}" class="blog-desc">{{post.title}}
+                        </a>
+                        <div class="author align-items-center">
+                            <img src="{{post.author.image.url}}" alt="" class="img-fluid rounded-circle" />
+                            <ul class="blog-meta">
+                                <li>
+                                    <a href="{% url 'news:user-posts' post.author.pk %}">{{post.author.user}}</a> </a>
+                                </li>
+                                <li class="meta-item blog-lesson">
+                                    <span class="meta-value"> {{post.modified}} Ago</span>. <span
+                                        class="meta-value ml-2"><span class="fa fa-clock-o"></span> 1 min</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                   
+                </div>
+            
+        </div>
+        {% endfor %} 
+    </div>
+</div>
+
+ {% else %}
+<div class="w3l-homeblock2 w3l-homeblock5 py-5">
+    <div class="container py-lg-5 py-md-4">
+        <!-- block -->
+        <div class="left-right">
+            <h3 class="section-title-left mb-sm-4 mb-2"> {{ category.title }}</h3>
+            <a href="{{category.get_absolute_url}}" class="more btn btn-small mb-sm-0 mb-4">View more</a>
+        </div>
+        <div class="row">
+             
+            <div class="col-lg-6">
+                <div class="bg-clr-white hover-box">
+                    <div class="row">
+                        {% for post in category.posts_for_frontpage %}
+                        <div class="col-sm-5 position-relative">
+                            <a href="{{post.get_absolute_url}}" class="image-mobile">
+                                <img class="card-img-bottom d-block radius-image-full" src="{{post.image.url}}"
+                                    alt="Card image cap">
+                            </a>
+                        </div>
+                        <div class="col-sm-7 card-body blog-details align-self">
+                            <a href="#blog-single.html" class="blog-desc">{{post.title}}
+                            </a>
+                            <div class="author align-items-center">
+                                <img src="{{post.author.image.url}}" alt="" class="img-fluid rounded-circle" />
+                                <ul class="blog-meta">
+                                    <li>
+                                        <a href="{% url 'news:user-posts' post.author.pk %}">{{post.author.user}}</a> </a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                        {% endfor %} 
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endfor %}
+
+
+<div class="w3l-homeblock2 w3l-homeblock6 py-5">
+    <div class="container-fluid px-sm-5 py-lg-5 py-md-4">
+        <!-- block -->
+            <h3 class="section-title-left mb-4"> Trending Now</h3>
+        <div class="row">
+            {% for post in latest %}
+            <div class="col-lg-6">
+                
+                <div class="bg-clr-white hover-box">
+                     
+                    <div class="row">
+                       
+                        <div class="col-sm-6 position-relative">
+                            <a href="{{post.get_absolute_url}}">
+                                <img class="card-img-bottom d-block radius-image-full" src="{{post.image.url}}"
+                                    alt="Card image cap" style="height: 200px;">
+                            </a>
+                        </div>
+                        <div class="col-sm-6 card-body blog-details align-self">
+                            <span class="label-blue">{{post.category}}</span><br>
+                            <a href="{{post.get_absolute_url}}" class="blog-desc">{{post.title}}</p>
+                            <div class="author align-items-center mt-3">
+                                <img src="{{post.author.image.url}}" alt="" class="img-fluid rounded-circle" />
+                                <ul class="blog-meta">
+                                    <li>
+                                        <a href="{% url 'news:user-posts' post.author.pk %}">{{post.author.first_name}}</a> </a>
+                                    </li>
+                                    <li class="meta-item blog-lesson">
+                                        <span class="meta-value"> {{post.modified|timesince}} Ago</span>. <span
+                                            class="meta-value ml-2"><span class="fa fa-clock-o"></span> </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="w3l-subscribe py-5">
+    <div class="container py-lg-5 py-md-4">
+        <div class="w3l-subscribe-content text-center bg-clr-white py-md-5 py-2">
+            <div class="py-5">
+                <h3 class="section-title-left mb-2">Subscribe to our newsletter!</h3>
+                <p class="mb-md-5 mb-4">We'll send you the best of our blog just once a month. We promise. </p>
+                <form action="." method="POST" class="subscribe">
+                    {% csrf_token %}
+                    <input type="email" class="subscribe_input" name="email" placeholder="Email address" required="">
+                    <button type='submit' class="btn btn-style btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $( ".truncate" ).slice(0,2)
+    })
+
+                    </script>
+
+
+{% endblock %}

@@ -1,0 +1,221 @@
+
+{% extends "base.html"%}
+{% load static %}
+
+{% block title%} NewsBlog237 | {{post.title}} {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+<section class="text-11 py-5">
+    <div class="text11 py-lg-5 py-md-4">
+        <div class="container">
+            <div class="blog-title px-md-5">
+                <h3 class="title-big">{{post.title}}
+                </h3>
+                <ul class="blog-list">
+                    <li>
+                        <p> Posted on <strong>{{post.modified|timesince}}Ago</strong></p>
+                    </li>
+                    <li>
+                        <p> By <a href="#author"><strong>{{post.author.user}}</strong></a></p>
+                    </li>
+                    <li>
+                        <p> Published in <a href="#category"><strong>{{post.category}}</strong></a></p>
+                    </li>
+                    <li>
+                        
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    
+                    <img src="{{post.image.url}}" alt="" class="img-fluid radius-image-full" style="width: 800px !important; padding-bottom: 20px; border-radius: 10px;">
+                     <br>
+                    <div class="text11-content">
+                        <h4 class="mt-sm-3"> {{post.title}}.</h4>
+                        <p class="mt-4 mb-3">{{post.body|safe}}</p>
+                        
+                        <div class="sing-post-thumb mb-lg-5 mb-4 row pt-3">
+                            <div class="col-md-6">
+                                <a href="#url"><img src="assets/images/fashion1.jpg" class="img-fluid" alt=""></a>
+                            </div>
+                            
+                        </div>
+                        
+
+                        <div class="social-share-blog mt-5">
+
+                            
+                            
+                        </div>
+                        
+                    </div>
+
+                </div>
+                <div class="sidebar-side col-lg-4 col-md-12 col-sm-12 mt-lg-0 mt-5">
+                    <aside class="sidebar">
+
+                        <!-- Author card Widget-->
+                        <div class="sidebar-widget sidebar-blog-category">
+                            <div class="author">
+                                <div class="sidebar-title">
+                                    <h4>About author</h4>
+                                </div>
+                                <div class="author-detalis">
+                                    <a href="{% url 'news:user-posts' post.author.pk %}" class="author-image"><img src="{{post.author.image.url}}"
+                                            alt="author image" class="img-fluid" ></a>
+                                    <div class="author-info">
+                                        <a href="{% url 'news:user-posts' post.author.pk %}" class="author-name">{{post.author}}</a>
+                                        <a href="{% url 'news:user-posts' post.author.pk %}" class="btn btn-outline-primary">View all Posts</a>
+                                    </div>
+                                </div>
+                                <p class="mt-2">{{post.author.profile.about}}</p>
+                            </div>
+                        </div>
+                        <!-- //Author card Widget-->
+
+                        <!--Blog Category Widget-->
+                        <div class="sidebar-widget sidebar-blog-category">
+                            <div class="sidebar-title">
+                                <h4>Categories</h4>
+                            </div>
+                            <ul class="blog-cat">
+                                {% for cat in cat %}
+                                <li><a href="{{cat.get_absolute_url}}">{{cat.title}} </a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+
+                        <!-- Popular Post Widget-->
+                        <div class="sidebar-widget popular-posts">
+                            <div class="sidebar-title">
+                                <h4>Recent Posts</h4>
+                            </div>
+                             {% for post in latest|slice:5 %}
+                            <article class="post">
+                                <figure class="post-thumb"><img src="{{post.image.url}}" alt=""></figure>
+                                <div class="text"><a href="{{post.get_absolute_url}}">
+                                   {{post.title}}</a>
+                                </div>
+                                <div class="post-info">{{post.modified|timesince}} Ago</div>
+                            </article>
+                                 {% endfor %}
+                            
+
+                        </div>
+
+                       
+                    </aside>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="comments">
+
+                        <h3 class="aside-title ">Recent comments ({{post.comments.count}}}</h3>
+                        {% if post.comments %}
+                        <div class="comments-grids">
+                            {% for comment in post.comments.all %}
+                            <div class="media-grid">
+                                <div class="media">
+                                    
+                                    <div class="media-body comments-grid-right">
+                                        <h5>{{comment.name}}</h5>
+                                        <ul class="p-0 comment">
+                                            <li class="">{{comment.email }} Ago</li>
+                                            <li class="">{{comment.time| timesince }} Ago</li>
+                                            
+                                        </ul>
+                                        <p>{{comment.comment_body}}</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor%}
+                            
+                        </div>
+                        {% endif %}
+                    </div>
+
+
+                    <div class="leave-comment-form" id="comment">
+                        <h3 class="aside-title">Leave a Comment</h3>
+                        <form action="" method="POST">
+                            <div class="input-grids">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ form.name|as_crispy_field }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.email|as_crispy_field }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.comment_body|as_crispy_field }}
+
+
+                                </div>
+                            </div>
+                            <div class="submit text-right">
+                                <button class="btn btn-style btn-primary">Post Comment</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- //single post -->
+
+<div class="w3l-homeblock2 py-5">
+    <div class="container py-lg-5 py-md-4">
+        <h3 class="section-title-left mb-4">You may also like </h3>
+       
+        <div class="row">
+             {% for post in latest|slice:3 %}
+            <div class="col-lg-4 col-md-6 item">
+                <div class="card">
+                    <div class="card-header p-0 position-relative">
+                        <a href="blog-single.html">
+                            <img class="card-img-bottom d-block radius-image-full" src="{{post.image.url}}"
+                                alt="Card image cap">
+                        </a>
+                    </div>
+                    <div class="card-body blog-details">
+                        <span class="label-blue">{{post.category}}</span>
+                        <a href="{{post.get_absolute_url}}" class="blog-desc">{{post.title}}
+                        </a>
+                        <p>{{post.body|slice:100|safe}}</p>
+                        <div class="author align-items-center mt-3 mb-1">
+                            <img src="{{post.author.image.url}}" alt="" class="img-fluid rounded-circle">
+                            <ul class="blog-meta">
+                                <li>
+                                    <a href="{% url 'news:user-posts' post.author.pk %}">{{post.author.user}}</a>
+                                </li>
+                                <li class="meta-item blog-lesson">
+                                    <span class="meta-value"> {{post.created|timesince}} Ago </span>. <span
+                                        class="meta-value ml-2"><span class="fa fa-clock-o"></span> </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+           {% endfor %} 
+        </div>
+        
+
+    </div>
+</div>
+
+{% endblock %}

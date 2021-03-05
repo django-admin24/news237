@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title%} NewsBlog237 | Post Search Query {% endblock %}
+{% load crispy_forms_tags %}
+
+
+
+ {%  block content %}
+
+
+
+
+
+
+<div class="w3l-contact-10 py-5" id="contact">
+    <div class="form-41-mian pt-lg-4 pt-md-3 pb-md-4">
+        <div class="container">
+            <div class="heading">
+                <h3 class="category-title mb-3">Search Result </h3>
+                <p class="mb-md-5 mb-4"></p>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 ">
+                    {% if queryset %}
+                         {% for result in queryset %}
+
+                                <h3>{{result.count}}</h3>
+                                   <a href="{% url 'news:post_detail' result.slug %}"> <h3>{{result}} </h3></a>
+
+                                {% endfor %}
+                    {% else%}
+                    <h3>No Search Result found for this Query </h3>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="col-lg-4 contacts-5-grid-main section-gap mt-lg-0 mt-5">
+                    <div class="contacts-5-grid">
+                        <h3 class="section-title-left mb-4"> Advertise with us</h3>
+                        <div class="map-content-5">
+                            <section class="tab-content">
+                                <!--Blog Category Widget-->
+                        <div class="sidebar-widget sidebar-blog-category">
+                            <div class="sidebar-title">
+                                <h4>Categories</h4>
+                            </div>
+                            <ul class="blog-cat">
+                                {% for cat in categories|slice:4 %}
+                                <li><a href="#url">{{cat.title}} </a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+
+                        <!-- Popular Post Widget-->
+                        <div class="sidebar-widget popular-posts">
+                            <div class="sidebar-title">
+                                <h4>Recent Posts</h4>
+                            </div>
+                             {% for post in latest|slice:5 %}
+                            <article class="post">
+                                <figure class="post-thumb"><img src="{{post.image.url}}" alt=""></figure>
+                                <div class="text"><a href="blog-single.html">
+                                   {{post.title}}</a>
+                                </div>
+                                <div class="post-info">{{post.modified|timesince}} Ago</div>
+                            </article>
+                                 {% endfor %}
+                            
+
+                        </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //contacts-5-grid -->
+    </div>
+</div>
+ {%  endblock content%}

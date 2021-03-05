@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title%} NewsBlog237 | Post List of {{profile.user.username}} {% endblock %}
+
+{% load crispy_forms_tags %}
+
+
+
+ {%  block content %}
+
+
+<section class="text-11 py-5">
+    <div class="text11 py-lg-5 py-md-4">
+        <div class="container">
+            <div class="blog-title px-md-5">
+                <h3 class="title-big">
+                </h3>
+                
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    
+                    
+                    <div class="text11-content">
+
+                         <!-- Author card Widget-->
+                        <div class="sidebar-widget sidebar-blog-category">
+                            <div class="author">
+                                <div class="sidebar-title">
+                                </div>
+                                
+                                
+                                <hr>
+                                <h3>Post Created By {{profile.user.username}}</h3>
+
+                                <hr>
+                                 {% if profile.post_authors %}
+                                    <ul class="blog-cat">
+                                        {% for post in profile.post_authors %}
+                                        <li>
+                                        <a href="{{post.get_absolute_url}}">{{post.title}}</a>
+                                        </li>
+                                        {% endfor %}
+                                        <a href="{% url 'news:add' %}" class="btn btn-outline-primary">Create Another Post</a>
+                                    </ul>
+                                    {% else %}
+                                   <h4 class="sidebar-title"> ({{profile.user.username}}) Has Created No Post Yet </h4>
+                                    <a href="{% url 'authors' %}" class="btn btn-outline-primary">Back To Authors List </a>
+                                    {% endif %}
+                            </div>
+                        </div>
+                        <!-- //Author card Widget-->
+
+                      
+                    </div>
+
+                </div>
+                <div class="sidebar-side col-lg-4 col-md-12 col-sm-12 mt-lg-0 mt-5">
+                    <aside class="sidebar">
+
+                      
+
+                        <!--Blog Category Widget-->
+                        <div class="sidebar-widget sidebar-blog-category">
+                            <div class="sidebar-title">
+                                <h4>Categories</h4>
+                            </div>
+                            <ul class="blog-cat">
+                                {% for cat in categories|slice:5 %}
+                                <li><a href="{{cat.get_absolute_url}}">{{cat.title}} </a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+
+                        <!-- Popular Post Widget-->
+                        <div class="sidebar-widget popular-posts">
+                            <div class="sidebar-title">
+                                <h4>Recent Posts</h4>
+                            </div>
+                             {% for post in latest|slice:6 %}
+                            <article class="post">
+                                <figure class="post-thumb"><img src="{{post.image.url}}" alt=""></figure>
+                                <div class="text"><a href="{{post.get_absolute_url}}">
+                                   {{post.title}}</a>
+                                </div>
+                                <div class="post-info">{{post.modified}}</div>
+                            </article>
+                                 {% endfor %}
+                            
+
+                        </div>
+
+                        <!-- 
+                        <div class="sidebar-sticky">
+                            <div class="sidebar-sticky-fix">
+                               
+                                <div class="sidebar-widget sidebar-blog-category archive">
+                                    <div class="sidebar-title">
+                                        <h4>Twitter feed</h4>
+                                    </div>
+                                    <ul class="blog-cat twitter-feed">
+                                        <li><a href="#url"> Creating an Art that shows the beauty in everyone’s ideas of flaws.
+                                            . #beauty #style #art #creative…</a></li>
+                                        <li><a href="#url">See our lifestyle and beauty posts on twitter. #LifeStyle #Beauty
+                                            </a></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div> -->
+                        
+
+                    </aside>
+                </div>
+            </div>
+
+
+           
+        </div>
+    </div>
+</section>
+<!-- //single post -->
+
+
+
+
+<!-- code end -->
+ {%  endblock content%}

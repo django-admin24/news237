@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title%} NewsBlog237 | Post Delete {% endblock %}
+
+
+{% load crispy_forms_tags %}
+
+
+
+ {%  block content %}
+ <section class="text-11 py-5">
+    <div class="text11 py-lg-5 py-md-4">
+    	<div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+
+	    			 <form method="post">{% csrf_token %}
+	                        <div class="form-group">
+	                                Sure, you want to delete that Post?<br>
+	                                <br>
+	                                <strong>{{ object }}</strong>
+	                                <br><br>
+	                                {{ form.errors }}
+	                                
+	                                <input type="hidden" name="confirm_delete" value="confirm_delete">
+	                                <button type="submit" class="btn btn-danger">Delete</button>
+	                                <a href="{{post.get_absolute_url}}" class="btn btn-primary">Cancel</a>
+	                        </div>
+	                </form>
+          </div>
+      </div>
+     </div>
+    </div>
+ </section>
+  {%  endblock content%}

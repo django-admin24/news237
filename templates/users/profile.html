@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title%} NewsBlog237 | User Profile {% endblock %}
+
+{% load crispy_forms_tags %}
+
+
+
+ {%  block content %}
+
+
+<section class="text-11 py-5">
+    <div class="text11 py-lg-5 py-md-4">
+        <div class="container">
+            <div class="blog-title px-md-5">
+                <h3 class="title-big">Authors Profile {{user.profile.first_name}} {{user.profile.last_name}}
+                </h3>
+                
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    
+                    
+                    <div class="text11-content">
+
+                         <!-- Author card Widget-->
+                        <div class="sidebar-widget sidebar-blog-category">
+                            <div class="author">
+                                <div class="sidebar-title">
+                                </div>
+                                <div class="author-detalis">
+                                    <a href="#author" class="author-image"><img src="{{user.profile.image.url}}"
+                                            alt="author image" class="img-fluid" ></a>
+                                    <div class="author-info">
+                                        <a href="#author-name" class="author-name">{{user.username}}</a>
+                                        <span>{{user.email}}</span> | <span><a href="{% url 'update-profile'%}">Edit Account</a></span>
+                                        <hr>
+                                        <a href="{% url 'news:add' %}" class="btn btn-outline-primary">Create Post</a>
+                                        <br>
+                                        {% if user.profile.about %}
+                                        <h4> About Author </h4>
+                                        <p class="mt-2">{{user.profile.about| safe}}</p>
+                                        {% else %}
+                                        <p>Please Edit Your Profile Account</p>
+                                        {% endif %}
+
+
+                                    </div>
+                                </div>
+                                <br><br>
+                                <hr>
+                                  {% if user.profile.post_authors %}
+
+                                    
+                                        {% for post in user.profile.post_authors %}
+                                        <li class="post">
+                                        <a style=" font-size: 20px; color:gray;" href="{{post.get_absolute_url}}">{{post.title}}</a> <span class="badge badge-success"><a href="{% url 'news:post_update' post.slug %}">Update</a></span>
+                                        <span class="badge badge-danger"><a href="{% url 'news:post-delete' post.slug %}">Delete</a></span>
+                                       </li>
+                                        {% endfor %}
+
+                                    </ul>
+                                      {% else %}
+                                    <h3>No Post Yet </h3>
+                                   <a href="{% url 'news:add' %}" class="btn btn-outline-primary">Create Post</a>
+
+                                   {% endif %}
+                            </div>
+                        </div>
+                        <!-- //Author card Widget-->
+
+                      
+                    </div>
+
+                </div>
+                <div class="sidebar-side col-lg-4 col-md-12 col-sm-12 mt-lg-0 mt-5">
+                    <aside class="sidebar">
+
+                      
+
+                        <!--Blog Category Widget-->
+                        <div class="sidebar-widget sidebar-blog-category">
+                            <div class="sidebar-title">
+                                <h4>Categories</h4>
+                            </div>
+                            <ul class="blog-cat">
+                                {% for cat in categories|slice:5 %}
+                                <li><a href="{{cat.get_absolute_url}}">{{cat.title}} </a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+
+                        <!-- Popular Post Widget-->
+                        <div class="sidebar-widget popular-posts">
+                            <div class="sidebar-title">
+                                <h4>Recent Posts</h4>
+                            </div>
+                             {% for post in latest|slice:6 %}
+                            <article class="post">
+                                <figure class="post-thumb"><img src="{{post.image.url}}" alt=""></figure>
+                                <div class="text"><a href="{{post.get_absolute_url}}">
+                                   {{post.title}}</a>
+                                </div>
+                                <div class="post-info">{{post.modified}}</div>
+                            </article>
+                                 {% endfor %}
+                            
+
+                        </div>
+
+                        
+
+                    </aside>
+                </div>
+            </div>
+
+
+           
+        </div>
+    </div>
+</section>
+<!-- //single post -->
+
+
+
+
+<!-- code end -->
+ {%  endblock content%}

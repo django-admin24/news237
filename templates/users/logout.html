@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title%} NewsBlog237 | Logout {% endblock %}
+
+{% load crispy_forms_tags %}
+
+
+
+ {%  block content %}
+
+<small> You Are Logged Out Login Again <a href="{% url 'user:login'%}"> Login </a> </small>
+ {%  endblock content%}

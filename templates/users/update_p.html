@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title%} NewsBlog237 | Update Profile {% endblock %}
+
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+ {%  block content %}
+<h2 class="mt-4">Update Your Account</h2>
+<section class="text-11 py-5">
+    <div class="text11 py-lg-5 py-md-4">
+        <div class="container">
+            <div class="blog-title px-md-5">
+
+      <legend>Update profile Form</legend>
+		<form method="POST" action="{% url 'update-profile'%}" enctype="multipart/form-data">
+			<div class="row">
+				
+
+	              <div class="col-lg-6">
+	                  {{u_form.username|as_crispy_field}}
+	                  {{u_form.email|as_crispy_field}}
+	                  {{ p_form.first_name|as_crispy_field }}
+	                  {{ p_form.last_name|as_crispy_field }}
+	               </div>
+	            
+
+				{% csrf_token %}
+			
+
+	              <div class="col-lg-6">
+	              	<img src="{{user.profile.image.url }}" style="border-radius: 20%; width: 100px; ">
+
+	                {{ p_form.image|as_crispy_field }}
+	                {{ p_form.about|add_class:'form-control about' }}
+	                <br>
+	                 
+	                 <button type="submit" class="btn btn-info">Update </button>
+	               </div>
+	            
+
+	            
+	         </div>
+			
+            <!-- <script>
+               CKEDITOR.replace('about')
+                </script> -->
+        </form>
+
+    </div>
+</div>
+</div>
+</section>
+
+ {%  endblock content%}

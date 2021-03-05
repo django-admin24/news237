@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title%} NewsBlog237 | List of All Authors {% endblock %}
+
+
+{% load crispy_forms_tags %}
+
+
+
+ {%  block content %}
+
+<section class="text-11 py-5">
+    <div class="text11 py-lg-5 py-md-4">
+        <div class="container">
+        	<div class="row top-pics">
+        	{% for profile in profile %}
+        	  <div class="col-lg-4 col-md-6">
+
+                   <div class="sidebar-widget sidebar-blog-category">
+                            <div class="author">
+                                <div class="sidebar-title">
+                                    <h4>About author</h4>
+                                </div>
+                                <div class="author-detalis">
+                                    <a href="" class="author-image"><img src="{{ profile.image.url }}"
+                                            alt="author image" class="img-fluid" ></a>
+                                    <div class="author-info">
+                                        <a href="{% url 'news:user-posts' profile.pk%}" class="author-name">{{profile.user.username}}</a>
+                                        <a href="{% url 'news:user-posts' profile.pk%}" class="btn btn-outline-primary">View all Posts</a>
+                                    </div>
+                                </div>
+                                <p class="mt-2">{{profile.about|slice:300|safe}}</p>
+                            </div>
+                        </div>
+                    </div>
+                 {% endfor %}
+             </div>
+
+        </div>
+</div>
+</section>
+
+
+
+
+
+
+ {%  endblock content%}
+

@@ -1,0 +1,84 @@
+{% extends "base.html"%}
+
+{% block title%} NewsBlog237 | Post List of Category of {{cat.title}} {% endblock %}
+
+{% block content %}
+
+
+<div class="w3l-homeblock2 w3l-homeblock5 py-5">
+    <div class="container pt-md-4 pb-md-5">
+        <!-- block -->
+        <h3 class="category-title mb-3"> {{cat.title}}</h3>
+        <h3 class="mb-sm-5 mb-4 max-width">{{cat.short_title}}</h3>
+        <p class="mb-sm-5 mb-4 max-width">{{cat.body}}</p>
+        <div class="row">
+            {% if cat.posts_for_frontpage %}
+
+            
+
+        	{% for post in cat.posts_for_frontpage %}
+            <div class="col-lg-6">
+
+                <div class="bg-clr-white hover-box">
+                	
+                    <div class="row">
+                    	
+                        <div class="col-sm-5 position-relative">
+                            <a href="{{post.get_absolute_url}}" class="image-mobile">
+                                <img class="card-img-bottom d-block radius-image-full" src="{{post.image.url}}" alt="Card image cap" style="height: 150px;">
+                            </a>
+                        </div>
+                        <div class="col-sm-7 card-body blog-details align-self">
+                            <a href="{{post.get_absolute_url}}" class="blog-desc">{{post.title}}
+                            </a>
+                            <div class="author align-items-center">
+                                <img src="{{post.author.image.url}}" alt="" class="img-fluid rounded-circle">
+                                <ul class="blog-meta">
+                                    <li>
+                                        <a href="{% url 'news:user-posts' post.author.pk %}">{{post.author.user}}</a> 
+                                    </li>
+                                    <li class="meta-item blog-lesson">
+                                        <span class="meta-value"> {{post.created|timesince}} Ago </span>. <span class="meta-value ml-2"><span class="fa fa-clock-o"></span></span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <br>
+
+            </div>
+            {% endfor %}
+
+            {% else %}
+            
+            <h3 class="category-title mb-3">No post yet for this category</h3>
+
+            {% endif %}
+
+          
+            
+
+            
+        </div>
+        <!-- <ul class="site-pagination text-center mt-md-5 mt-4">
+            <li><span aria-current="page" class="page-numbers current">1</span></li>
+            <li><a class="page-numbers" href="#page2">2</a></li>
+            <li><a class="page-numbers" href="#page3">3</a></li>
+            <li><span class="page-numbers dots">…</span></li>
+            <li><a class="page-numbers" href="#page7">7</a></li>
+            <li><a class="next page-numbers" href="#next">Next »</a></li>
+        </ul> -->
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}

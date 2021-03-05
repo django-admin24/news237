@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% load widget_tweaks %}
+{% block title%} NewsBlog237 | Add New Post {% endblock %}
+
+ {%  block content %}
+
+
+
+
+
+
+<div class="w3l-contact-10 py-5" id="contact">
+    <div class="form-41-mian pt-lg-4 pt-md-3 pb-md-4">
+        <div class="container">
+            <div class="heading">
+                <h3 class="category-title mb-3">Add New Article </h3>
+                <p class="mb-md-5 mb-4"></p>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 ">
+                    <form method="POST" action="{% url 'news:add'%}"  enctype="multipart/form-data">
+
+					    {% csrf_token %}
+					    {{form|crispy}}
+                        
+
+                        
+					    <button type="submit" class="btn btn-info">Create Post </button>
+
+
+                <script>
+               CKEDITOR.replace('id_body')
+                </script>
+
+					</form>
+						
+                </div>
+
+                <div class="col-lg-4 contacts-5-grid-main section-gap mt-lg-0 mt-5">
+                    <div class="contacts-5-grid">
+                        <h3 class="section-title-left mb-4"> </h3>
+                        <div class="map-content-5">
+                            <section class="tab-content">
+                                <div class="author">
+                                <div class="sidebar-title">
+                                    <h4> Author</h4>
+                                </div>
+                                <div class="author-detalis">
+                                    <a href="" class="author-image"><img src="{{ user.profile.image.url }}"
+                                            alt="author image" class="img-fluid" ></a>
+                                    <div class="author-info">
+                                        <a href="#" class="author-name">{{user.username}}</a>
+                                        {% if  user.profile.first_name and user.profile.last_name%}
+                                            <h4>{{ user.profile.first_name }} {{ user.profile.last_name }}</h4>
+
+                                        {% else %}
+
+                                         <a href="{% url 'update-profile' %}"  class="btn btn-info">Edit Profile</a>
+
+                                        {% endif %}
+                                         
+                                         
+                                    </div>
+                                </div>
+                                 {% if  user.profile.about %}
+                                 <p class="mt-2">{{user.profile.about|safe}}</p>
+                                {% else %}
+
+                                         <a href="{% url 'update-profile' %}"  class="btn btn-info">Edit Profile</a>
+                                {% endif %}
+                                
+                            </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //contacts-5-grid -->
+    </div>
+</div>
+ {%  endblock content%}
+
+<!--  <div class="carousel-inner" role="listbox">
+    {% for slider in sliders%}        
+        <div class="item{% if forloop.first %} active{% endif %}">                    
+              <img src="{{slider.image.url}}" alt="Chania">
+              <div class="carousel-caption capt">
+                  <h1>{{slider.caption}}</h1>
+              </div>
+        </div>
+    {%endfor%}
+</div> -->
