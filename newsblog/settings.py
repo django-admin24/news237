@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+import django_heroku
+import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'widget_tweaks',
     'phone_field',
+
     
 ]
 
@@ -53,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'newsblog.urls'
@@ -129,8 +134,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
-
-
+STATICFILES_STORANGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
@@ -149,3 +153,5 @@ SENDGRID_API_KEY = "SG.hJU_M2VWTWSHhItRi5XJow.7VjciE9S2ecN_TeyFKYhUguyO4PX13fTPk
 SENDGRID_SANDBOX_MODE_IN_DEBUG=True
 FROM_EMAIL = "palmsj102@gmail.com"
 SENDGRID_ECHO_TO_STDOUT=True
+
+django_heroku.settings(locals())
